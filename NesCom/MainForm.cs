@@ -42,6 +42,7 @@ namespace NesCom
 			
 			byte[] ROMByte = File.ReadAllBytes(path);
 			ROM.Init(ROMByte);
+			CPU.PowerUp();
 			CPU.RunROM(ROM);
 			
 			

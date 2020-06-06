@@ -16,7 +16,7 @@ namespace NesCom
 	/// </summary>
 	public class rom
 	{
-		public int HeaderSize = 16;
+		public byte HeaderSize = 16;
 		int KBSize = 1024;
 		public byte NumOfCHRBlocks;
 		public byte NumOfPRGBlocks;

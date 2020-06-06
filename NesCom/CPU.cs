@@ -16,24 +16,68 @@ namespace NesCom
 	/// </summary>
 	public class cpu
 	{
-		public int ProgramCounter = 0;
-		public bool IsRunning = true;
-		int InstructionLength;
 		rom ROM;
 		
+		//Status Register (Store a single Byte)
+		public StatusFlags Status_Register; //Status Register
+		
+		//Counter Registers (Store a single Byte)
+		public UInt16 PC_Register; //Program Counter Register
+		public byte SP_Register; //Stack Pointer Register
+		
+		
+		//Data Registers (Store a single Byte)
+		public  byte X_Register; //X Register
+		public  byte Y_Register; //Y Register
+		public  byte A_Register; //A Register
+		
+		public bool IsRunning = true;
+		
+		byte InstructionLength;
+		
+		[Flags]
+		public enum StatusFlags
+		{
+			C = (1 << 0), //Carry Bit
+			Z = (1 << 1), //Zero
+			I = (1 << 2), //Disable Interrupts
+			D = (1 << 3), //Decimal Mode
+			B = (1 << 4), //Break
+			U = (1 << 5), //Unused
+			V = (1 << 6), //Overflow
+			N = (1 << 7) //Negative
+		};
+		
+		
+		public void PowerUp()
+		{
+			//Set the initial value of CPU Registers.
+			//Status = 0x34 (IRQ Disabled)
+			//X, Y & A = 0x0
+			//SP = 0xFD
+			//$4017 = 0 (Frame IRQ Disabled)
+			//$4015 = 0 (Sound Channels Disabled)
+			//$4000-$400F = 0 (Sound Registers)
+			
+			Status_Register = (StatusFlags)0x34;
+			X_Register = 0x0;
+			Y_Register = 0x0;
+			A_Register = 0x0;
+			SP_Register = 0xFD;
+	}
 		
 		public void RunROM(rom SelfROM)
 		{
 			//Load ROM
 			ROM = SelfROM;
-							ProgramCounter = ROM.HeaderSize;
+			PC_Register = ROM.HeaderSize;
 			//Run ROM
 			IsRunning = true;
 			byte CurrentByte;
 			while (IsRunning)
 			{
 				//Get byte at Program Counter
-				CurrentByte = ROM.GetByte(ProgramCounter);
+				CurrentByte = ROM.GetByte(PC_Register);
 				
 				//Turn Byte into Instruction
 				switch(CurrentByte)
@@ -45,7 +89,7 @@ namespace NesCom
 						LDAInstruction(CurrentByte);
 						break;
 					case 0xD8:
-						SEIInstruction(CurrentByte);
+						CLDInstruction(CurrentByte);
 						break;	
 						
 						
@@ -56,7 +100,7 @@ namespace NesCom
               			 break;
 				}
 					
-				ProgramCounter += InstructionLength;
+				PC_Register += InstructionLength;
 			}
 			
 			
