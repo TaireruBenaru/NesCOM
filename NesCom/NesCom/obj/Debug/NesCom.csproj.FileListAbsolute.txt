@@ -1,0 +1,8 @@
+C:\Users\510628\Desktop\SharpDevelop\Projects\NesCom\bin\Debug\NesCom.exe.config
+C:\Users\510628\Desktop\SharpDevelop\Projects\NesCom\bin\Debug\NesCom.exe
+C:\Users\510628\Desktop\SharpDevelop\Projects\NesCom\bin\Debug\NesCom.pdb
+C:\Users\510628\Desktop\SharpDevelop\Projects\NesCom\obj\Debug\NesCom.csprojResolveAssemblyReference.cache
+C:\Users\510628\Desktop\SharpDevelop\Projects\NesCom\obj\Debug\NesCom.exe
+C:\Users\510628\Desktop\SharpDevelop\Projects\NesCom\obj\Debug\NesCom.pdb
+C:\Users\510628\Desktop\SharpDevelop\Projects\NesCom\obj\Debug\NesCom.MainForm.resources
+C:\Users\510628\Desktop\SharpDevelop\Projects\NesCom\obj\Debug\NesCom.csproj.GenerateResource.Cache
