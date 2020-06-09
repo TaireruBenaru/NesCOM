@@ -57,10 +57,15 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ram.cs" />
     <Compile Include="rom.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="ROms\Earthbound_Zero_%28P%29_%28H%29.nes" />
+    <None Include="ROms\JSRRTS.nes" />
+    <None Include="ROms\nestest.nes" />
+    <None Include="ROms\sample.nes" />
     <None Include="ROms\Super Mario Bros %28E%29.nes" />
   </ItemGroup>
   <ItemGroup>
