@@ -7,6 +7,7 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
+using System.Diagnostics;
 
 namespace NesCom
 {
@@ -20,7 +21,12 @@ namespace NesCom
 		
 		public void Init()
 		{
-			Memory = new byte[KB * 2];
+			Memory = new byte[65536];
+			
+			for (int i = 0; i < 255; i++) 
+			{
+  				Memory[256 + i] = 0xFF;
+			}
 		}
 		
 		public byte GetByte(int Position)
@@ -29,9 +35,17 @@ namespace NesCom
 			return Memory[Position];
 		}
 		
-		public void SetByte(int Position, byte Value)
+		public UInt16 GetByte16(UInt16 Position)
 		{
 			//Gets byte at position
+			byte[] Value = { Memory[Position], Memory[Position+1] };
+			UInt16 ByteValue = BitConverter.ToUInt16(Value, 0);
+			return ByteValue;
+		}
+		
+		public void SetByte(int Position, byte Value)
+		{
+			//Sets byte at position
 			Memory[Position] = Value;
 			return;
 		}

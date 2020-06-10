@@ -16,6 +16,7 @@ namespace NesCom
 	/// </summary>
 	public class rom
 	{
+		ram RAM;
 		public byte HeaderSize = 16;
 		int KBSize = 1024;
 		public byte NumOfCHRBlocks;
@@ -23,18 +24,19 @@ namespace NesCom
 		public byte[] ROMBytes;
 		public byte[] PRGBytes;
 			
-		public void Init(byte[] ROMData)
+		public void Init(byte[] ROMData, ram RAMvar)
 		{
+			 RAM = RAMvar;
 			 NumOfPRGBlocks = ROMData[4];
 			 NumOfCHRBlocks = ROMData[5];
 			 ROMBytes = ROMData;
-			 PRGBytes = ROMData.Skip(16).Take(HeaderSize * KBSize * NumOfPRGBlocks).ToArray();
+			 PRGBytes = ROMData.Skip(16).Take(KBSize * NumOfPRGBlocks).ToArray();
 		}
 		
 		public byte GetByte(int ProgramCounter)
 		{
 			//Gets byte at position
-			return ROMBytes[ProgramCounter];
+			return RAM.Memory[ProgramCounter];
 		}
 	}
 }

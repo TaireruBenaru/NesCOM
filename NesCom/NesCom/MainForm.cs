@@ -34,26 +34,49 @@ namespace NesCom
 			//
 			
 			//TODO: Unhardcode path.
-			string path = @"C:\Users\510628\Desktop\SharpDevelop\Projects\NesCom\ROms\Super Mario Bros (E).nes";
 			
-			rom ROM = new rom();
-			cpu CPU = new cpu();
-			ram RAM = new ram();
+			 
 			
 			
-			byte[] ROMByte = File.ReadAllBytes(path);
-			ROM.Init(ROMByte);
-			RAM.Init();
-			CPU.PowerUp();
-			CPU.RunROM(ROM, RAM);
 			
 			
-			//foreach (byte Instruction in Instructions)
-			//{
-			//	CPU.LDAInstruction(Instruction);
-			//}
 			
 			
 		}
+		
+		
+		private void OpenROM(object sender, EventArgs e)
+        {
+            // Show the dialog and get result.
+            DialogResult result = openFileDialog1.ShowDialog();
+            if (result == DialogResult.OK) // Test result.
+            {
+            	string path = openFileDialog1.FileName;
+            	
+            				rom ROM = new rom();
+			cpu CPU = new cpu();
+			ram RAM = new ram();
+				byte[] ROMByte = File.ReadAllBytes(path);
+			
+			
+			int num1 = 0x8000;
+			int num2 = 0xc000;
+			
+			
+			ROM.Init(ROMByte, RAM);
+			RAM.Init();
+			Buffer.BlockCopy(ROM.ROMBytes, 0x10, RAM.Memory, num1, 0x4000);
+			if(ROM.NumOfPRGBlocks == 1)
+			{
+				Buffer.BlockCopy(ROM.ROMBytes, 0x10, RAM.Memory, num2, 0x4000);
+			}
+			Debug.WriteLine(RAM.Memory[0x8000]);
+			Debug.WriteLine(RAM.Memory[0xC5F5]);
+			CPU.PowerUp();
+			CPU.RunROM(ROM, RAM);
+            	
+            }
+            Console.WriteLine(result); // <-- For debugging use.
+        }
 	}
 }
